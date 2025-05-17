@@ -25,7 +25,7 @@ async def rephrase(input_text: str, mood: str) -> str:
     
     # Create the prompt for the LLM
     prompt = f"""Please rephrase the following text to express a {mood} mood or tone. 
-    Keep the core meaning intact, but adjust the language, word choice, and expression to reflect the {mood} mood.
+    Keep the core meaning intact, but adjust the language, word choice, and expression to reflect the {mood} mood. do not explain what you have changed, just give the result and try to be precise.
     
     Original text: {input_text}
     
