@@ -21,12 +21,22 @@ async def root():
     return {
         "message": "Mood-Based Text Rephraser API",
         "documentation": "/docs",
-        "usage": "Send a POST request to /api/v1/rephrase with text and mood in the request body",
-        "example": {
-            "text": "I need to attend a meeting tomorrow.",
-            "mood": "excited"
-        },
-        "available_moods": settings.AVAILABLE_MOODS
+        "features": {
+            "rephrase": {
+                "endpoint": "/api/v1/rephrase",
+                "example": {
+                    "text": "I need to attend a meeting tomorrow.",
+                    "mood": "excited"
+                },
+                "available_moods": settings.AVAILABLE_MOODS
+            },
+            "grammar_fix": {
+                "endpoint": "/api/v1/fix-grammar",
+                "example": {
+                    "text": "I has went to the store yesterday."
+                }
+            }
+        }
     }
 
 # Run the application from this file

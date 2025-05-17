@@ -2,12 +2,31 @@
 from fastapi import APIRouter, HTTPException
 # Fix import paths from "App" to "app" (case sensitivity matters)
 from App.core.config import settings
-from App.model.schemas import TextInput, RephrasedResponse
-from App.services.llm_service import rephrase
+from App.model.schemas import TextInput, RephrasedResponse, GrammarFixInput, GrammarFixResponse
+from App.services.llm_service import rephrase, fix_grammar
 
-router = APIRouter(prefix="/rephrase", tags=["rephraser"])
+router = APIRouter(prefix="/keyboard", tags=["rephraser"])
 
-@router.post("/", response_model=RephrasedResponse)
+@router.post("/fix-grammar", response_model=GrammarFixResponse)
+async def fix_text_grammar(input_data: GrammarFixInput):
+    """
+    Endpoint to fix grammatical errors in text
+    
+    Parameters:
+    - text: The text to fix grammar
+    
+    Returns:
+    - original_text: The input text
+    - corrected_text: The text with grammar fixed
+    """
+    corrected = await fix_grammar(input_data.text)
+    
+    return GrammarFixResponse(
+        original_text=input_data.text,
+        corrected_text=corrected
+    )
+
+@router.post("/rephrase", response_model=RephrasedResponse)
 async def rephrase_text(input_data: TextInput):
     """
     Endpoint to rephrase text according to the specified mood

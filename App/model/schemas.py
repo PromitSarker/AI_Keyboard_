@@ -16,6 +16,30 @@ class TextInput(BaseModel):
             }
         }
 
+#grammar error fixing
+class GrammarFixInput(BaseModel):
+    """Schema for grammar correction input"""
+    text: str = Field(..., description="The text to fix grammar", min_length=1)
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "text": "I has went to the store yesterday."
+            }
+        }
+
+class GrammarFixResponse(BaseModel):
+    """Schema for grammar correction response"""
+    original_text: str = Field(..., description="The original input text")
+    corrected_text: str = Field(..., description="The text with grammar fixed")
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "original_text": "I has went to the store yesterday.",
+                "corrected_text": "I went to the store yesterday."
+            }
+        }
 class RephrasedResponse(BaseModel):
     """Schema for the rephrased text response"""
     original_text: str = Field(..., description="The original input text")
